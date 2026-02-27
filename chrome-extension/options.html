@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Anonymizer — Word Pairs</title>
+  <link rel="stylesheet" href="options.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Word Pairs</h1>
+
+    <div class="add-form">
+      <input type="text" id="fromInput" class="text-input" placeholder="From (original)">
+      <span class="arrow">&#8594;</span>
+      <input type="text" id="toInput" class="text-input" placeholder="To (replacement)">
+      <button class="btn btn-primary" id="addBtn">Add</button>
+    </div>
+
+    <p class="form-msg" id="formMsg"></p>
+
+    <div class="list-actions">
+      <span class="pair-count" id="pairCount">0 pairs</span>
+      <button class="btn btn-sm" id="exportBtn" disabled>Export JSON</button>
+      <button class="btn btn-sm" id="importBtn">Import JSON</button>
+      <input type="file" id="fileInput" accept=".json,application/json" style="display:none">
+    </div>
+
+    <p class="empty-msg" id="emptyMsg">No word pairs yet. Add one above.</p>
+
+    <div class="table-wrapper" id="tableWrapper" style="display:none">
+      <table class="pairs-table">
+        <thead>
+          <tr>
+            <th>From (original)</th>
+            <th>To (replacement)</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody id="pairsBody"></tbody>
+      </table>
+    </div>
+  </div>
+  <script src="options.js"></script>
+</body>
+</html>
