@@ -8,7 +8,7 @@ A single-page app that anonymizes and deanonymizes text using user-defined word 
 2. **Anonymize** — paste text, click Anonymize; all `from` values are replaced with their `to` counterparts
 3. **Deanonymize** — paste anonymized text, click Deanonymize; replacements are reversed
 
-Matching is case-sensitive and respects word boundaries, so `amazon` will not match inside `amazonian`.
+Matching is case-insensitive and applies to partial matches, so `Akeneo` will also match inside `AkeneoProductCollectionBuilder` and `$akeneoEntities`.
 
 ## JSON Import Format
 

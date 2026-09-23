@@ -19,7 +19,7 @@ Single-page React app (no backend) that anonymizes/deanonymizes text using user-
 
 **State & routing** live entirely in `src/App.tsx` — it holds the `WordPair[]` array, syncs it to localStorage, and switches between three page components based on the active tab.
 
-**Core logic** is in `src/utils/replacer.ts`. The `replace(text, pairs, reverse?)` function does a single-pass regex substitution, sorting pairs by source length descending to handle overlapping matches. Word boundaries use a custom pattern (`(?<![a-zA-Z0-9_$])...(?![a-zA-Z0-9_$])`) that also handles PHP `$variable` syntax.
+**Core logic** is in `src/utils/replacer.ts`. The `replace(text, pairs, reverse?)` function does a single-pass regex substitution, sorting pairs by source length descending to handle overlapping matches, including partial matches inside larger identifiers or words, and matching sources case-insensitively.
 
 **Pages** (`src/pages/`):
 - `AnonymizePage` / `DeanonymizePage` — textarea → button → output with clipboard copy; differ only in the `reverse` flag passed to `replace()`

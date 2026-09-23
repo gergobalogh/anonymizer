@@ -15,9 +15,6 @@ function escapeRegex(str: string): string {
  * - Sort pairs by source length descending so longer tokens match before
  *   shorter ones (prevents "foo" stealing a match inside "foobar").
  * - Combine all patterns into one regex and run a single .replace() pass.
- * - Boundary matching: reject a match when it is immediately preceded or
- *   followed by an identifier character ([a-zA-Z0-9_$]).  This handles
- *   both plain word identifiers and PHP-style $variable names correctly.
  */
 export function replace(text: string, pairs: WordPair[], reverse = false): string {
   const valid = pairs.filter((p) => (reverse ? p.to : p.from).length > 0);
@@ -35,12 +32,12 @@ export function replace(text: string, pairs: WordPair[], reverse = false): strin
   for (const pair of sorted) {
     const src = reverse ? pair.to : pair.from;
     const dst = reverse ? pair.from : pair.to;
-    if (map.has(src)) continue; // skip duplicate sources
-    map.set(src, dst);
-    const escaped = escapeRegex(src);
-    patterns.push(`(?<![a-zA-Z0-9_$])${escaped}(?![a-zA-Z0-9_$])`);
+    const key = src.toLowerCase();
+    if (map.has(key)) continue; // skip duplicate sources ignoring case
+    map.set(key, dst);
+    patterns.push(escapeRegex(src));
   }
 
-  const combined = new RegExp(patterns.join('|'), 'g');
-  return text.replace(combined, (match) => map.get(match) ?? match);
+  const combined = new RegExp(patterns.join('|'), 'gi');
+  return text.replace(combined, (match) => map.get(match.toLowerCase()) ?? match);
 }
